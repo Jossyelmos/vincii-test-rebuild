@@ -4,23 +4,25 @@ import { Link } from 'react-router-dom';
 const Question3 = () => {
     const [disabled, setDisabled] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    const [invisible, setInvisible] = useState(null);
+    const [invisible, setInvisible] = useState(true);
 
     const wrapperRef = useRef(null);
+    console.log(wrapperRef.current);
 
     useEffect(() => {
-        document.addEventListener('click', handleClickOutside, false);
-        showAlert();
-        return () => {
-          document.removeEventListener('click', handleClickOutside, false);
-        }
+      document.addEventListener('click', handleClickOutside, false);
+      return () => {
+        document.removeEventListener('click', handleClickOutside, false);
+      }
+      // eslint-disable-next-line
     }, []);
-
+    
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setDisabled(true);
-      }
-    }
+        showAlert();
+      };
+    };
 
     function handleInputChange(event) {
       const value = event.target.value;
@@ -29,17 +31,18 @@ const Question3 = () => {
         setDisabled(false);
       } else {
         setDisabled(true);
-      }
-    }
+      };
+    };
 
     const showAlert = () => {
       setInvisible('Please enter 6 or more characters');
-      setTimeout(() => (setInvisible), 1000);
-    }
+      setTimeout(() => setInvisible(false), 3000);
+    };
 
     return (
         <section ref={wrapperRef}>
-          {disabled && inputValue.length < 6 && invisible}
+          {invisible}
+          {disabled && inputValue.length < 6 }
           <form className="form-inline">
             <div className="form-group mx-sm-3 mb-2">
               <label htmlFor="inputPassword2" className="sr-only">Password</label>
