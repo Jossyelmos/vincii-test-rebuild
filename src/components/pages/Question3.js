@@ -7,7 +7,6 @@ const Question3 = () => {
     const [invisible, setInvisible] = useState(true);
 
     const wrapperRef = useRef(null);
-    console.log(wrapperRef.current);
 
     useEffect(() => {
       document.addEventListener('click', handleClickOutside, false);
